@@ -65,19 +65,24 @@
       top: 50%;
       transform-origin: 100%;
       transform: rotate(90deg);
-      transition: all 0.5s;
+      transition: all 0.07s;
+    }
+
+    .no-transition {
+      transition: none;
     }
 
   </style>
 
   <script>
 
-    clockHands = {
-      second: document.querySelector('.second-hand'),
-      minute:  document.querySelector('.min-hand'),
-      hour: document.querySelector('.hour-hand'),
+    const secondHand = document.querySelector('.second-hand')
+    const minuteHand =  document.querySelector('.min-hand')
+    const hourHand =  document.querySelector('.hour-hand')
 
-    }
+    // list to run side by side with the currentTime list in the loop
+    const clockHands = [ secondHand, minuteHand, hourHand ]
+
     function getTime() {
 
       const date = new Date();
@@ -85,12 +90,21 @@
       const minutes = date.getMinutes()
       const hours = date.getHours()
 
-      for ( let key  of Object.keys(clockHands)) {
-        const handName = `${key}Hand`
-        console.log(handName)
-        const degrees = (`${key}s` / 60 * 360) + 90
-        // secondHand.style.transform = `rotate(${degrees}deg`
-        console.log(degrees)
+      // stores data in a list so we can use a loop to run the update on the clock
+      const currentTime = [ seconds, minutes, hours ]
+
+      // loops through updating seconds, minutes, hours
+      for (let i = 0; i < currentTime.length; i++)
+       {
+         // +90 to offset the very first rotation
+        const degrees = (currentTime[i] / 60 * 360) + 90
+         // stops the clock going backwards when reaching the top
+         if (degrees === 90) {
+           clockHands[i].classList.add('no-transition')
+         } else {
+           clockHands[i].classList.remove('no-transition')
+         }
+        clockHands[i].style.transform = `rotate(${degrees}deg`
       }
     }
 
