@@ -27,17 +27,27 @@
       misc styles, nothing to do with CSS variables
     */
 
+    :root {
+      --base: #ffc600 ;
+      --spacing: 50px;
+      --blur: 4px;
+    }
+
     body {
       text-align: center;
-      background: #193549;
+      background: var(--base);
       color: white;
       font-family: 'helvetica neue', sans-serif;
       font-weight: 100;
       font-size: 50px;
     }
 
+    img {
+      filter: blur(var(--blur));
+    }
+
     .controls {
-      margin-bottom: 50px;
+      margin-bottom: var(--spacing);
     }
 
     input {
@@ -46,6 +56,14 @@
   </style>
 
   <script>
+
+    const colorControl = document.getElementById('base')
+
+    colorControl.addEventListener('input', (e) => {
+      console.log(e)
+      document.documentElement.style.setProperty('--base', e.target.value)
+    })
+
   </script>
 
 </body>
