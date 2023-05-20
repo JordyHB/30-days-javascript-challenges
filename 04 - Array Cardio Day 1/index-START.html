@@ -45,30 +45,60 @@
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
 
-    names = inventors.map( inventor => `${inventor.first} ${inventor.last}` )
+    const names = inventors.map( inventor => `${inventor.first} ${inventor.last}` )
     console.log(names)
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
 
-    sorted = inventors.sort( (a, b)  => (a.passed - a.year) - (b.passed - b.year ))
-    console.log(sorted)
+    const sorted = inventors.sort( (a, b)  => a.year > b.year ? 1 : -1)
+    console.table(sorted)
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
 
+    const allYearsSum = inventors.reduce( (yearsLived, inventor) => yearsLived + (inventor.passed - inventor.year), 0)
+
+    console.log(allYearsSum)
+
     // 5. Sort the inventors by years lived
+
+    const ageSorted = inventors.sort( (a, b)  => (a.passed - a.year) - (b.passed - b.year ))
+    console.table(ageSorted)
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+
+    // const pagesInCat = document.querySelector('.mw-category')
+    // const  links = Array.from(pagesInCat.querySelectorAll('a'))
+    // const text = links.map( link => link.innerText).filter( text => text.includes('de'))
+    // console.table(text)
+
 
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
 
+    const nameSorted = people.sort( (a ,b ) => {
+      const [ aLast ] = a.split(',')
+      const [ bLast ] = b.split(',')
+      return aLast > bLast ? 1 : -1
+    })
+
+    console.table(nameSorted)
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+
+    const results = data.reduce((totalTransports, currentVehicle) =>  {
+      if(!totalTransports[currentVehicle]) {
+        totalTransports[currentVehicle] = 0
+      }
+      totalTransports[currentVehicle]++
+      return totalTransports
+    }, {})
+    console.table(results)
 
   </script>
 </body>
